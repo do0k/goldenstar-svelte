@@ -1,0 +1,43 @@
+@font-face {
+	font-family: 'IRANYekanXVF';
+	src: url('/fonts/yekan/IRANYekanXVF.woff') format('woff-variations'),
+		url('IRANYekanXVF.woff') format('woff');
+	font-weight: 100 1000;
+	font-display: fallback;
+}
+
+@font-face {
+	font-family: IRANYekanX;
+	src: url('/fonts/yekan/IRANYekanX-regular.woff') format('woff');
+}
+@font-face {
+	font-family: IRANYekanX;
+	src: url('/fonts/yekan/IRANYekanX-bold.woff') format('woff');
+	font-weight: 700;
+}
+
+* {
+	outline: none;
+}
+
+html,
+body {
+	font-family: 'IRANYekanX', tahoma;
+}
+
+@supports (font-variation-settings: normal) {
+	html,
+	body {
+		font-family: 'IRANYekanXVF', tahoma;
+	}
+}
+
+.progress-ring {
+	stroke-dasharray: 10 20;
+}
+
+.progress-ring__circle {
+	transition: stroke-dashoffset 0.35s;
+	transform: rotate(-90deg);
+	transform-origin: 50% 50%;
+}

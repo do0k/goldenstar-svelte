@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  name         String       @db.VarChar(255)
+  id           Int          @id @default(autoincrement())
+  nationalId   Int?         @unique
+  mobile       Int?
+  personelId   Int?
+  entranceDate DateTime     @db.Timestamp(6)
+  exitDate     DateTime     @db.Timestamp(6)
+  type         CustomerType
+  licencePlate String?
+  address      String?
+  servingZone  String?
+  cardImage    String?
+  Reception    Reception[]
+}
+
+model Reception {
+  id         Int      @id @default(autoincrement())
+  formId     Int      @unique
+  customer   Customer @relation(fields: [customerId], references: [id])
+  formImage  String
+  customerId Int
+}
+
+model Room {
+  id         Int       @id @default(autoincrement())
+  roomNumber Int
+  state      RoomState @default(AVAILABLE)
+  type       RoomType
+}
+
+model User {
+  id            Int       @id @default(autoincrement())
+  username      String    @unique
+  password      String
+  role          UserRole
+  name          String?
+  profileImage  String?
+  userAuthToken String?   @unique
+  createdAt     DateTime  @default(now())
+  upadatedAt    DateTime? @updatedAt
+}
+
+enum CustomerType {
+  MILITARY
+  NONMILITARY
+}
+
+enum ReceptionType {
+  MILITARYORDERED
+  MILITARY
+  AGENT
+  RETIRED
+  NONMILITARY
+}
+
+enum RoomState {
+  AVAILABLE
+  CLEANING
+  UNAVAILABLE
+  UNOPERATIONAL
+}
+
+enum RoomType {
+  THREE
+  FOUR
+  FIVE
+}
+
+enum UserRole {
+  ADMIN
+  RECEPTION
+}
